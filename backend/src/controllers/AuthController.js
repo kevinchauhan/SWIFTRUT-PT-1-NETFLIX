@@ -36,7 +36,7 @@ export class AuthController {
             const salt = await bcryptjs.genSalt(10);
             const hashedPassword = await bcryptjs.hash(password, salt);
 
-            const PROFILE_PICS = ["/avatar1.png", "/avatar2.png", "/avatar3.png"];
+            const PROFILE_PICS = ["/avatar1.png", "/avatar2.jpg", "/avatar3.png"];
             const image = PROFILE_PICS[Math.floor(Math.random() * PROFILE_PICS.length)];
 
             const newUser = new User({
