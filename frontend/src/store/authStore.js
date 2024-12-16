@@ -20,7 +20,7 @@ export const useAuthStore = create((set, get) => ({
         });
 
         try {
-            const { data } = await api.post("/auth/signup", credentials);
+            const { data } = await api.post("/api/auth/signup", credentials);
             set({
                 user: data.user,
                 loadingStates: {
@@ -50,7 +50,7 @@ export const useAuthStore = create((set, get) => ({
         });
 
         try {
-            const { data } = await api.post("/auth/login", credentials);
+            const { data } = await api.post("/api/auth/login", credentials);
             set({
                 user: data.user,
                 loadingStates: {
@@ -80,7 +80,7 @@ export const useAuthStore = create((set, get) => ({
         });
 
         try {
-            await api.post("/auth/logout");
+            await api.post("/api/auth/logout");
             set({
                 user: null,
                 loadingStates: {
@@ -110,7 +110,7 @@ export const useAuthStore = create((set, get) => ({
         });
 
         try {
-            const { data } = await api.get("/auth/authCheck");
+            const { data } = await api.get("/api/auth/authCheck");
             set({
                 user: data.user,
                 loadingStates: {
