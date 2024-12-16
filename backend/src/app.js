@@ -13,16 +13,21 @@ import authenticate from './middlewares/authenticate.js';
 const app = express();
 
 db()
-
+const corsOptions = {
+    origin: 'http://localhost:5173', // Replace with your frontend's URL
+    credentials: true, // Allows cookies to be sent and received
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow necessary HTTP methods
+    allowedHeaders: ['Content-Type', 'Authorization'], // Allow specific headers
+};
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(morgan('dev'));
 app.use(helmet());
 app.use(cookieParser());
 
 app.use("/api/auth", auth);
-app.use("/api/movie", authenticate, movie);
+app.use("/api/movie", movie);
 app.use("/api/tv", authenticate, tv);
 app.use("/api/search", authenticate, search);
 
