@@ -9,7 +9,7 @@ const generateTokenAndSetCookie = (userId, res) => {
     // Set the token in a cookie
     res.setHeader('Set-Cookie', cookie.serialize('jwt-netflix', token, {
         httpOnly: true,         // Prevents JavaScript access to the cookie
-        secure: process.env.NODE_ENV === 'production', // Set cookie as Secure in production (requires HTTPS)
+        secure: true, // Set cookie as Secure in production (requires HTTPS)
         maxAge: 24 * 60 * 60,   // 1 day expiration time
         path: '/',              // Available for the entire app
     }));
