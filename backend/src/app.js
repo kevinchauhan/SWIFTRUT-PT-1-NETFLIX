@@ -24,7 +24,7 @@ app.use(cookieParser());
 app.use("/api/auth", auth);
 app.use("/api/movie", authenticate, movie);
 app.use("/api/tv", authenticate, tv);
-app.use("/api/search", search);
+app.use("/api/search", authenticate, search);
 
 app.use((req, res, next) => {
     res.status(404).json({ message: 'Route not found' });

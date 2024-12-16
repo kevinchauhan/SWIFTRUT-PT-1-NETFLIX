@@ -15,7 +15,7 @@ class SearchController {
                 return res.status(404).send(null);
             }
 
-            await User.findByIdAndUpdate(req.user._id, {
+            await User.findByIdAndUpdate(req.user.userId, {
                 $push: {
                     searchHistory: {
                         id: response.results[0].id,
@@ -47,7 +47,7 @@ class SearchController {
                 return res.status(404).send(null);
             }
 
-            await User.findByIdAndUpdate(req.user._id, {
+            await User.findByIdAndUpdate(req.user.userId, {
                 $push: {
                     searchHistory: {
                         id: response.results[0].id,
@@ -79,7 +79,7 @@ class SearchController {
                 return res.status(404).send(null);
             }
 
-            await User.findByIdAndUpdate(req.user._id, {
+            await User.findByIdAndUpdate(req.user.userId, {
                 $push: {
                     searchHistory: {
                         id: response.results[0].id,
@@ -101,8 +101,17 @@ class SearchController {
     // Get search history
     static async getSearchHistory(req, res) {
         try {
-            res.status(200).json({ success: true, content: req.user.searchHistory });
+            // Retrieve the user by their ID (from the authenticated user)
+            const user = await User.findById(req.user.userId);
+
+            if (!user) {
+                return res.status(404).json({ success: false, message: "User not found" });
+            }
+
+            // Return the user's search history
+            res.status(200).json({ success: true, content: user.searchHistory });
         } catch (error) {
+            console.error("Error fetching search history:", error.message);
             res.status(500).json({ success: false, message: "Internal Server Error" });
         }
     }
@@ -113,7 +122,7 @@ class SearchController {
         id = parseInt(id);
 
         try {
-            await User.findByIdAndUpdate(req.user._id, {
+            await User.findByIdAndUpdate(req.user.userId, {
                 $pull: {
                     searchHistory: { id: id },
                 },
