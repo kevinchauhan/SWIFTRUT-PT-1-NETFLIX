@@ -1,12 +1,21 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useLayoutEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/authStore";
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const { login, isLoggingIn } = useAuthStore();
+    const { login, isLoggingIn, user } = useAuthStore();
+
+    const navigate = useNavigate()
+
+    useLayoutEffect(() => {
+        if (user) {
+            navigate('/')
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [user])
 
     const handleLogin = (e) => {
         e.preventDefault();

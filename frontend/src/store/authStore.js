@@ -101,7 +101,7 @@ export const useAuthStore = create((set, get) => ({
         }
     },
 
-    verifyAuth: async () => {
+    self: async () => {
         set({
             loadingStates: {
                 ...get().loadingStates,
@@ -110,9 +110,9 @@ export const useAuthStore = create((set, get) => ({
         });
 
         try {
-            const { data } = await api.get("/api/auth/authCheck");
+            const { data } = await api.get("/api/auth/self");
             set({
-                user: data.user,
+                user: data,
                 loadingStates: {
                     ...get().loadingStates,
                     checkingAuth: false,

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useLayoutEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/authStore";
 
 const Signup = () => {
@@ -10,7 +10,15 @@ const Signup = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    const { signup, isSigningUp } = useAuthStore();
+    const { signup, isSigningUp, user } = useAuthStore();
+    const navigate = useNavigate()
+
+    useLayoutEffect(() => {
+        if (user) {
+            navigate('/')
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [user])
 
     const handleSignUp = (e) => {
         e.preventDefault();
