@@ -1,6 +1,11 @@
+import { Route, Routes } from "react-router-dom"
+import Home from "./pages/Home"
+
 const App = () => {
   return (
-    <div className="bg-orange-800">App</div>
+    <Routes>
+      <Route path='/' element={<Home />} />
+    </Routes>
   )
 }
 
