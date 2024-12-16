@@ -3,7 +3,7 @@ import { create } from "zustand";
 import { api } from "../http/client";
 
 export const useAuthStore = create((set, get) => ({
-    currentUser: null,
+    user: null,
     loadingStates: {
         signingUp: false,
         checkingAuth: false,
@@ -22,7 +22,7 @@ export const useAuthStore = create((set, get) => ({
         try {
             const { data } = await api.post("/auth/signup", credentials);
             set({
-                currentUser: data.user,
+                user: data.user,
                 loadingStates: {
                     ...get().loadingStates,
                     signingUp: false,
@@ -52,7 +52,7 @@ export const useAuthStore = create((set, get) => ({
         try {
             const { data } = await api.post("/auth/login", credentials);
             set({
-                currentUser: data.user,
+                user: data.user,
                 loadingStates: {
                     ...get().loadingStates,
                     loggingIn: false,
@@ -82,7 +82,7 @@ export const useAuthStore = create((set, get) => ({
         try {
             await api.post("/auth/logout");
             set({
-                currentUser: null,
+                user: null,
                 loadingStates: {
                     ...get().loadingStates,
                     loggingOut: false,
@@ -112,7 +112,7 @@ export const useAuthStore = create((set, get) => ({
         try {
             const { data } = await api.get("/auth/authCheck");
             set({
-                currentUser: data.user,
+                user: data.user,
                 loadingStates: {
                     ...get().loadingStates,
                     checkingAuth: false,
@@ -120,7 +120,7 @@ export const useAuthStore = create((set, get) => ({
             });
         } catch {
             set({
-                currentUser: null,
+                user: null,
                 loadingStates: {
                     ...get().loadingStates,
                     checkingAuth: false,
