@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import cron from 'node-cron';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
@@ -9,6 +10,8 @@ import tv from './routes/tv.js';
 import search from './routes/search.js';
 import db from './config/db.js';
 import authenticate from './middlewares/authenticate.js';
+import { config } from 'dotenv'
+config()
 
 const app = express();
 
@@ -33,6 +36,20 @@ app.use("/api/search", authenticate, search);
 
 app.use((req, res, next) => {
     res.status(404).json({ message: 'Route not found' });
+});
+
+app.get('/cron', (req, res) => {
+    res.status(200).send('Server is alive');
+});
+
+cron.schedule('*/10 * * * *', async () => {
+    try {
+        console.log('Pinging /keep-alive to keep server active...');
+        await axios.get(`${process.env.SERVER_URL}/cron`);
+        console.log('Ping successful.');
+    } catch (error) {
+        console.error('Error pinging keep-alive endpoint:', error.message);
+    }
 });
 
 app.use((err, req, res, next) => {
