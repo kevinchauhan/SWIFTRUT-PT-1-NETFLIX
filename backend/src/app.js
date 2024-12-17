@@ -11,13 +11,14 @@ import search from './routes/search.js';
 import db from './config/db.js';
 import authenticate from './middlewares/authenticate.js';
 import { config } from 'dotenv'
+import { Config } from './config/index.js';
 config()
 
 const app = express();
 
 db()
 const corsOptions = {
-    origin: 'http://localhost:5173', // Replace with your frontend's URL
+    origin: Config.FRONTEND_URL, // Replace with your frontend's URL
     credentials: true, // Allows cookies to be sent and received
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow necessary HTTP methods
     allowedHeaders: ['Content-Type', 'Authorization'], // Allow specific headers
